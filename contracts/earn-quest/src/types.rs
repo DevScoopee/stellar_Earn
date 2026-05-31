@@ -72,6 +72,21 @@ pub enum SubmissionStatus {
 //   signatures (`get_user_stats`) are unchanged.  The `badges` field is now
 //   fetched separately via `get_user_badges()`.
 
+/// Hot-path user data: xp, level, quests_completed — loaded on every XP operation.
+#[contracttype]
+#[derive(Clone, Debug, Eq, PartialEq)]
+pub struct UserCore {
+    pub xp: u64,
+    /// Current user level (1–5)
+    pub level: u32,
+    /// Number of quests successfully completed
+    pub quests_completed: u32,
+}
+
+/// Backward-compatible alias: existing code that references `UserStats` still
+/// compiles.  The `badges` field has moved to `UserBadges`.
+pub type UserStats = UserCore;
+
 #[contracttype]
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum DisputeStatus {
@@ -98,16 +113,6 @@ pub struct Commitment {
     pub timestamp: u64,
 }
 
-#[contracttype]
-#[derive(Clone, Debug, Eq, PartialEq)]
-pub struct UserStats {
-    pub xp: u64,
-    /// Current user level (1–5)
-    pub level: u32,
-    /// Number of quests successfully completed
-    pub quests_completed: u32,
-}
-
 /// Separate storage entry for a user's badge collection.
 /// Loaded only when badges are displayed or granted.
 #[contracttype]
@@ -115,10 +120,6 @@ pub struct UserStats {
 pub struct UserBadges {
     pub badges: Vec<Badge>,
 }
-
-/// Backward-compatible alias: existing code that references `UserStats` still
-/// compiles.  The `badges` field has moved to `UserBadges`.
-pub type UserStats = UserCore;
 
 #[contracttype]
 #[derive(Clone, Debug, Eq, PartialEq)]

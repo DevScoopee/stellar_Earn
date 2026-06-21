@@ -43,7 +43,8 @@ fn test_open_and_resolve_dispute_emit_indexed_events() {
     assert_eq!(open_quest, quest_id);
     assert_eq!(open_initiator, initiator);
     assert_eq!(open_arbitrator, arbitrator);
-    client.resolve_dispute(&quest_id, &initiator, &arbitrator, &false, &0u32);
+
+    client.resolve_dispute(&quest_id, &initiator, &arbitrator);
 
     let resolved = client.get_dispute(&quest_id, &initiator);
     assert_eq!(resolved.status, DisputeStatus::Resolved);
@@ -89,7 +90,7 @@ fn test_appeal_process_emits_indexed_events() {
 
     // Open and resolve initial dispute
     client.open_dispute(&quest_id, &initiator, &arbitrator);
-    client.resolve_dispute(&quest_id, &initiator, &arbitrator, &false, &0u32);
+    client.resolve_dispute(&quest_id, &initiator, &arbitrator);
 
     // Appeal the resolution
     client.appeal_dispute(&quest_id, &initiator, &appeals_arbitrator);
@@ -111,7 +112,7 @@ fn test_appeal_process_emits_indexed_events() {
 
     // Resolve the appeal (only admin can resolve)
     // We use the admin account as the arbitrator for resolution
-    client.resolve_dispute(&quest_id, &initiator, &arbitrator, &false, &0u32);
+    client.resolve_dispute(&quest_id, &initiator, &admin);
 
     let final_dispute = client.get_dispute(&quest_id, &initiator);
     assert_eq!(final_dispute.status, DisputeStatus::Resolved);

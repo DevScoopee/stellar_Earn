@@ -20,7 +20,7 @@ import {
   withRetry,
   createCancelToken,
   type CancelToken,
-} from './client';
+} from '../client';
 import type {
   UserResponse,
   UserStatsResponse,
@@ -32,15 +32,8 @@ import type {
 import type { QuestResponse, SubmissionResponse } from '@/lib/types/api.types';
 
 // Re-export legacy dashboard types for backward compat
-export type {
-  UserStats,
-  Quest,
-  Submission,
-  EarningsData,
-  Badge,
-  DashboardData,
-} from '../types/dashboard';
-import type { EarningsData, Badge, DashboardData } from '../types/dashboard';
+// (canonical definitions now live in ./types.ts; re-exported via barrel)
+import type { EarningsData, Badge, DashboardData } from './types';
 
 const dashboardDelay = (ms: number) =>
   new Promise((resolve) => setTimeout(resolve, ms));

@@ -8,7 +8,7 @@ import type {
   Submission,
   EarningsData,
   Badge,
-} from '../types/dashboard';
+} from '@/lib/api/user';
 import {
   fetchUserStats,
   fetchActiveQuests,
@@ -16,7 +16,7 @@ import {
   fetchEarningsHistory,
   fetchBadges,
   fetchDashboardData,
-} from '../api/user';
+} from '@/lib/api/user';
 import { useAuth } from '@/context/AuthContext';
 
 interface UseUserStatsReturn {

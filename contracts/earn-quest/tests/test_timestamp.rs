@@ -383,6 +383,8 @@ fn test_batch_registration_deadline_too_soon_rejected() {
     use earn_quest::types::BatchQuestInput;
     use soroban_sdk::Vec;
 
+    let too_soon = now + MIN_DEADLINE_DURATION - 1;
+
     let mut batch_inputs = Vec::new(&env);
     batch_inputs.push_back(BatchQuestInput {
         id: symbol_short!("BQ1"),
@@ -416,6 +418,8 @@ fn test_batch_registration_valid_deadline_accepted() {
 
     use earn_quest::types::BatchQuestInput;
     use soroban_sdk::Vec;
+
+    let valid_deadline = now + MIN_DEADLINE_DURATION + 1_000;
 
     let mut batch_inputs = Vec::new(&env);
     batch_inputs.push_back(BatchQuestInput {
